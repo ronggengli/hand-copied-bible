@@ -1,0 +1,25 @@
+{
+  "name": "hand-copied-bible",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node tests/unit.test.js && node tests/app.test.js",
+    "send-reminders": "node --env-file=.env.local scripts/batch_send_reminders.js",
+    "test:unit": "node tests/unit.test.js",
+    "test:integration": "node tests/app.test.js"
+  },
+  "devDependencies": {
+    "vite": "^8.3.4"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.109.0",
+    "nodemailer": "^10.1.0",
+    "ws": "^8.21.3"
+  },
+  "description": "教會手抄聖經認領與管理系統（Vercel + Supabase + Gmail）",
+  "license": "MIT"
+}

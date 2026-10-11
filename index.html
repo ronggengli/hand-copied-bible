@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{churchName}} - 讓我們一起抄寫聖經</title>
+  <meta name="description" content="{{tagline}}">
+  <meta property="og:title" content="{{churchName}} - 讓我們一起抄寫聖經">
+  <meta property="og:description" content="{{tagline}}">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="./src/css/style.css">
+  {{faviconLink}}
+</head>
+
+<body>
+
+  <!-- 頂部品牌導航列  -->
+  <div class="brand-topbar">
+    <div class="container topbar-inner">
+      {{brandHtml}}
+
+      <nav class="nav-actions">
+        <button type="button" class="btn-nav active" id="btn-nav-claim">📖 章節認領</button>
+        <button type="button" class="btn-nav" id="btn-nav-myclaim">🔍 查詢 / 修改認領</button>
+        <button type="button" class="btn-nav" id="btn-nav-admin">⚙️ 管理員後台</button>
+        {{extraNavLinksHtml}}
+      </nav>
+    </div>
+  </div>
+
+  <!-- 主視覺 Hero 區域 -->
+  <header class="hero-banner">
+    <div class="container">
+      <div class="hero-header">
+        <h1 class="hero-slogan-title">{{slogan}}</h1>
+        <p class="hero-slogan-subtitle">{{tagline}}</p>
+      </div>
+
+      <!-- 全聖經認領總進度條 -->
+      <div class="progress-card">
+        <div class="progress-header">
+          <span class="progress-title">📊 全聖經認領總進度</span>
+          <span class="progress-stats" id="overall-progress-stats">載入中...</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="overall-progress-bar" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- 已經繳交進度條（連動後台「章節收件」頁籤：同工每標記一章已收件，這裡就會增加） -->
+      <div class="progress-card">
+        <div class="progress-header">
+          <span class="progress-title">📮 已經繳交進度</span>
+          <span class="progress-stats" id="submitted-progress-stats">載入中...</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill submitted-fill" id="submitted-progress-bar" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- 資料同步狀態：顯示最後更新時間；連線失敗時提示目前是舊資料 -->
+      <div class="sync-status" id="sync-status" aria-live="polite">
+        <span id="sync-status-text"></span>
+        <button type="button" class="sync-refresh-btn" id="btn-sync-refresh">🔄 重新整理</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 抄寫重要提醒與專用稿紙下載 -->
+  <section class="notice-section">
+    <div class="container">
+      <div class="notice-header-bar">
+        <h2 class="notice-main-title">📌 抄寫重要提醒與繳交須知</h2>
+        <a href="{{paperPath}}" download="{{paperFile}}" class="pdf-download-btn">
+          📥 下載專用「{{paperFile}}」
+        </a>
+      </div>
+
+      <div class="notice-cards-grid">
+        <!-- 提醒 0: 聖經譯本規範（跟旁邊兩張同一列，align-self: stretch 讓三張卡片
+             底部對齊、一樣高——這三張內容長度接近，撐到最高的那張不會留下太誇張的
+             空白，適合用 stretch；跟長很多的「書寫格式」分開列就沒有這個顧慮） -->
+        <div class="notice-card" style="border-top: 3px solid var(--brand-red); align-self: stretch;">
+          <div class="notice-card-header">
+            <span class="notice-icon">📖</span>
+            <span class="notice-card-title">聖經譯本規範</span>
+          </div>
+          <p class="notice-card-text">
+            請以使用<strong>和合本（神版）</strong>聖經版本的內容抄寫。
+          </p>
+        </div>
+
+        <!-- 提醒 0.5: 請以禱告開始 -->
+        <div class="notice-card" style="align-self: stretch;">
+          <div class="notice-card-header">
+            <span class="notice-icon">🙏</span>
+            <span class="notice-card-title">請以禱告開始</span>
+          </div>
+          <p class="notice-card-text">
+            抄寫經文前，請先讀過該段經文一至二次，並用所要抄寫的經文為自己禱告，求主藉由我們抄寫祂的話語來光照我們自己，對我們說話。
+          </p>
+        </div>
+
+        <!-- 提醒 1: 抄寫紙筆 -->
+        <div class="notice-card" style="align-self: stretch;">
+          <div class="notice-card-header">
+            <span class="notice-icon">✒️</span>
+            <span class="notice-card-title">抄寫紙筆</span>
+          </div>
+          <ol class="notice-card-text" style="margin: 0; padding-left: 20px; line-height: 1.85;">
+            <li>請使用<strong>黑色或藍色的0.5mm水性或油性筆</strong>。</li>
+            <li>請使用系統提供的專用稿紙檔案，<strong>70 - 100 磅紙張</strong>，<strong>列印為雙面</strong>。</li>
+          </ol>
+        </div>
+
+        <!-- 提醒 2: 書寫格式（內容明顯比其他卡片長很多，獨立佔滿一整列，
+             避免跟其他短卡片同一列時把那一列的格線高度撐開、留下大片空白） -->
+        <div class="notice-card" style="grid-column: 1 / -1;">
+          <div class="notice-card-header">
+            <span class="notice-icon">📝</span>
+            <span class="notice-card-title">書寫格式</span>
+          </div>
+          <ol class="notice-card-text" style="margin: 0; padding-left: 20px; line-height: 1.85;">
+            <li><strong>直書，由上到下，由右到左</strong>書寫，且在「神」前面空一格。</li>
+            <li>
+              稿紙從書卷的某一章的第一節開始書寫者，稿紙的第一行，<strong>空四格</strong>，寫書卷名，再空一格寫章數。第一行有書卷名者，章數後，空適當格數，寫「抄寫人：[姓名]」，姓名最後一個字結束於第一行最後一格。如：創世記　第一章                     抄寫人：李小華。
+            </li>
+            <li>
+              第二行從首格開始往下抄寫，每個字、節數、標點符號，均使用1格，<strong>直到該章結束，不再斷行</strong>，如：1起初，神創造天地。2地是空虛混沌，淵面黑暗；神的靈運行在水面上，跨頁的第一行也不需要再抄寫書卷名、章數及抄寫人。
+            </li>
+            <li>
+              經文裡括弧小字、詩篇開頭的篇題、和合本分段標題、頁邊/行間的註腳與串珠號碼，都不需要抄寫。
+            </li>
+            <li>
+              抄寫以章為單位，每章抄寫完成後，<strong>下一章請從新的一張稿紙開始</strong>。
+            </li>
+          </ol>
+          <p class="notice-card-text" style="margin-top: 10px; font-size: 13px; color: var(--text-muted);">
+            💡 是否及如何使用修正帶或修正液的使用，請自行斟酌。
+          </p>
+        </div>
+
+        <!-- 提醒 3～5：書寫格式範例（左） + 活動期間／收件地點及時間上下疊放（右）。
+             這三張內容長度差很多（範例有兩張縮圖，另外兩張都很短），同一列三欄並排會
+             讓短的兩張下面留一截背景空白；改成左右兩欄、右欄再把兩張矮卡片疊起來，
+             讓右欄的疊放總高度貼近左欄範例卡的高度，兩邊底部盡量對齊，不留大塊空白。 -->
+        <div class="notice-card-cluster" style="grid-column: 1 / -1;">
+          <div class="notice-card">
+            <div class="notice-card-header">
+              <span class="notice-icon">📄</span>
+              <span class="notice-card-title">書寫格式範例</span>
+            </div>
+            <div class="manuscript-example-body">
+              <p class="notice-card-text">
+                不確定怎麼下筆嗎？可以參考這兩份範例喔！
+              </p>
+              <div class="manuscript-example-links">
+                <a href="/manuscript-example-matthew1.pdf" target="_blank" class="manuscript-example-link">
+                  <img src="/manuscript-example-matthew1-thumb.png" alt="手抄聖經書寫格式範例：馬太福音第一章直書稿紙" class="manuscript-example-img" loading="lazy">
+                  <span class="manuscript-example-name">馬太福音第一章</span>
+                  <span class="manuscript-example-caption">🔍 點圖開啟完整範例 PDF</span>
+                </a>
+                <a href="/manuscript-example-psalm8.pdf" target="_blank" class="manuscript-example-link">
+                  <img src="/manuscript-example-psalm8-thumb.png" alt="手抄聖經書寫格式範例：詩篇第八篇直書稿紙" class="manuscript-example-img" loading="lazy">
+                  <span class="manuscript-example-name">詩篇第八篇</span>
+                  <span class="manuscript-example-caption">🔍 點圖開啟完整範例 PDF</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="notice-card-stack">
+            <!-- 提醒 4: 活動期間（flex: 1 讓這張卡片自己長高吃掉多出來的高度，
+                 而不是把多的高度變成它跟下面「收件地點」中間一大截空隙；
+                 justify-content: center 讓內容留在長高的卡片正中間，不會頂在最上面
+                 下面卻是一片空白） -->
+            <div class="notice-card highlight-card" style="flex: 1; justify-content: center;">
+              <div class="notice-card-header">
+                <span class="notice-icon">⏰</span>
+                <span class="notice-card-title" style="color: var(--brand-red);">活動期間</span>
+              </div>
+              <p class="notice-card-text">
+                <strong style="color: var(--brand-red); font-size: 16.5px;">{{eventRange}}</strong>。<br>
+                <span style="display: inline-block; margin-top: 4px;">{{overdueNotice}}</span>
+              </p>
+            </div>
+
+            <!-- 提醒 5: 收件地點及時間（內容來自 church.config.js） -->
+            <div class="notice-card location-card-wrap">
+              <div class="notice-card-header">
+                <span class="notice-icon">📍</span>
+                <span class="notice-card-title">收件地點及時間</span>
+              </div>
+              <div class="location-details-grid">{{locationCards}}
+              </div>
+              <ul class="notice-location-list" style="margin-top: 10px;">
+                <li>繳交時，用迴紋針或長尾夾夾起即可，請勿用訂書機裝訂或膠水黏貼。</li>
+                {{mailingNoteHtml}}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 主要內容區 -->
+  <main class="main-content container">
+
+    <!-- ================= 視圖一：會友認領章節 (Public Claim) ================= -->
+    <section id="section-claim">
+
+      <!-- 選擇困難隨機幫我選區塊 (Lucky Picker) -->
+      <div class="lucky-picker-card">
+        <div class="lucky-picker-header">
+          <span class="lucky-picker-icon">🎲</span>
+          <span class="lucky-picker-title">我有選擇困難，讓電腦幫我選：</span>
+        </div>
+        <div class="lucky-picker-buttons">
+          <button type="button" class="btn-lucky" id="btn-lucky-1">🎯 隨機選 1 章</button>
+          <button type="button" class="btn-lucky" id="btn-lucky-2">🎯 隨機選 2 章</button>
+          <button type="button" class="btn-lucky" id="btn-lucky-3">🎯 隨機選 3 章</button>
+        </div>
+      </div>
+
+      <!-- 篩選與搜尋欄 -->
+      <div class="filter-bar">
+        <!-- 第一列：書卷分類 + 搜尋框 -->
+        <div class="filter-row filter-row-top">
+          <div class="tab-group" id="category-tab-group">
+            <button type="button" class="tab-btn active" data-category="all">全部 (66卷)</button>
+            <button type="button" class="tab-btn" data-category="ot">舊約 (39卷)</button>
+            <button type="button" class="tab-btn" data-category="nt">新約 (27卷)</button>
+          </div>
+
+          <div class="search-box">
+            <input type="text" id="book-search-input" class="search-input" placeholder="🔍 快速搜尋書卷名稱（例如：創世記、羅馬書）...">
+          </div>
+        </div>
+
+        <!-- 第二列：認領狀態篩選 -->
+        <div class="filter-row filter-row-bottom">
+          <div class="tab-group" id="claim-status-tab-group">
+            <button type="button" class="tab-btn active" data-claim-status="all">全部顯示</button>
+            <button type="button" class="tab-btn" data-claim-status="unclaimed">全部尚未認領</button>
+            <button type="button" class="tab-btn" data-claim-status="claimed">全部已經認領</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 圖例說明 (Legend) -->
+      <div class="legend-bar">
+        <div class="legend-item">
+          <span class="legend-box available"></span>
+          <span>可認領（點擊挑選，每人限認領 1～{{maxChapters}} 章）</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-box selected"></span>
+          <span>已選中（待送出驗證）</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-box claimed"></span>
+          <span>已被認領</span>
+        </div>
+      </div>
+
+      <div
+        style="font-size: 13px; color: var(--text-muted); margin: -10px 0 18px 4px; display: flex; align-items: center; gap: 6px;">
+        <span>💡</span>
+          <span>註：章節中標示之「<strong>X面</strong>」，表示依該章節數預估約會需要幾面的專用稿紙（以 A4 300字稿紙估算，惟此為 AI 預估，僅供參考，與實際抄寫數量可能會有所出入）。</span>
+      </div>
+
+      <!-- 聖經書卷與章節主網格 (66 Books Grid) -->
+      <div id="books-container" class="books-container">
+        <!-- 由 JS 動態生成 66 卷書 -->
+      </div>
+    </section>
+
+    <!-- ================= 視圖二：查詢 / 取消我的認領 (My Claims) ================= -->
+    <section id="section-myclaim" style="display: none;">
+      <div class="section-header">
+        <h2>🔍 查詢我的手抄聖經認領</h2>
+        <p class="section-desc">直接輸入您認領時填寫的電子郵件信箱即可查詢；也可以貼上確認信中的專屬連結或驗證碼
+          (Token)。<br>若認領時未填寫電子郵件信箱，請改用確認信中的專屬連結或驗證碼查詢——這是唯一的查詢方式。</p>
+      </div>
+
+      <div style="max-width: 650px; margin: 0 auto 24px;">
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="token-search-input" class="form-input" placeholder="請輸入您認領時填寫的電子郵件信箱...">
+          <button type="button" id="btn-search-token" class="btn-primary"
+            style="width: auto; white-space: nowrap; padding: 0 20px;">查詢</button>
+        </div>
+      </div>
+      <div id="my-claim-container">
+        <!-- 由 JS 渲染查詢結果 -->
+      </div>
+    </section>
+
+    <!-- ================= 視圖三：管理員後台 (Admin Panel) ================= -->
+    <section id="section-admin" style="display: none;">
+
+      <!-- 登入表單 (未認證時) -->
+      <div id="admin-login-form"
+        style="max-width: 420px; margin: 40px auto; background: #ffffff; padding: 36px 32px; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-lg); text-align: center;">
+        <div style="font-size: 40px; margin-bottom: 12px;">🔒</div>
+        <h2 style="margin-bottom: 8px; font-size: 22px;">管理員後台登入</h2>
+        <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 20px;">請輸入同工管理安全通行碼</p>
+        <form>
+          <div class="form-group">
+            <input type="password" id="admin-pin-input" class="form-input" placeholder="請輸入管理密碼..." required autofocus
+              style="text-align: center; font-size: 16px; letter-spacing: 2px;">
+          </div>
+          <button type="submit" class="btn-primary">登入管理後台</button>
+        </form>
+      </div>
+
+      <!-- 管理儀表板 (認證後) -->
+      <div id="admin-dashboard" style="display: none;">
+
+        <!-- 統計數據卡片 -->
+        <div id="admin-stats-grid" class="admin-stats-grid">
+          <!-- 由 JS 渲染 -->
+        </div>
+
+        <!-- 後台頁籤：名單管理 / 章節收件 -->
+        <div class="tab-group" id="admin-tab-group" style="margin-bottom: 20px;">
+          <button type="button" class="tab-btn active" data-admin-tab="roster">📋 名單管理</button>
+          <button type="button" class="tab-btn" data-admin-tab="chapters">📖 章節收件</button>
+        </div>
+
+        <!-- ===== 頁籤一：名單管理（原有內容） ===== -->
+        <div id="admin-panel-roster">
+
+          <!-- 篩選、搜尋與批次操作工具列 -->
+          <div class="admin-toolbar">
+            <div class="toolbar-left">
+              <select id="admin-filter-status" class="form-select" style="width: auto; padding: 7px 12px;">
+                <option value="all">所有認領狀態</option>
+                <option value="pending">⏳ 尚未繳交者 (未交件)</option>
+                <option value="submitted">✓ 已繳交者</option>
+              </select>
+
+              <input type="text" id="admin-search-input" class="form-input" placeholder="搜尋姓名、信箱、章節..."
+                style="width: 220px; padding: 7px 12px;">
+            </div>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button type="button" id="btn-admin-batch-remind" class="btn-secondary"
+                style="background: #FEF0C7; color: #B54708; border-color: #FEDF89; font-weight: 600;">
+                📢 一鍵寄送催件信 (未繳交者)
+              </button>
+              <button type="button" id="btn-admin-export-csv" class="btn-secondary" style="font-weight: 600;">
+                📊 匯出 Excel / CSV
+              </button>
+              <button type="button" id="btn-admin-reset-data" class="btn-secondary"
+                style="color: var(--text-muted); font-size: 12px;">
+                ↺ 重新整理數據
+              </button>
+              <button type="button" id="btn-admin-logout" class="btn-secondary"
+                style="color: var(--danger); font-size: 12px;">
+                登出
+              </button>
+            </div>
+          </div>
+
+          <!-- 認領總名單表格 -->
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>認領人</th>
+                  <th>所屬團契</th>
+                  <th>電子郵件</th>
+                  <th>認領章節 (節數/面數)</th>
+                  <th>認領時間</th>
+                  <th>繳交狀態</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="admin-claims-tbody">
+                <!-- 由 JS 渲染表格 -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 系統信件發送記錄（僅限管理同工查看，內含會友姓名/信箱與專屬連結，不可公開） -->
+          <div class="section-header" style="margin-top: 36px;">
+            <h2>✉️ 系統信件發送記錄</h2>
+            <p class="section-desc">點選任何一封信件即可即時預覽信件的完整 HTML 排版（僅記錄本瀏覽器曾寄出的催件信）。</p>
+          </div>
+          <div id="email-logs-list" class="email-logs-list">
+            <!-- 由 JS 渲染 -->
+          </div>
+        </div>
+
+        <!-- ===== 頁籤二：章節收件（新功能）===== -->
+        <div id="admin-panel-chapters" style="display: none;">
+          <div class="section-header">
+            <h2>📖 章節收件管理</h2>
+            <p class="section-desc">
+              同工收到會友繳交的手抄稿紙時，於下方對照書卷章節，點選該章即可標記為「已收件」；點錯了再點一次可以取消。<br>
+              灰色章節代表尚未被任何人認領，無稿紙可收，不能點選。
+            </p>
+          </div>
+
+          <!-- 篩選與搜尋欄（跟章節認領頁籤同一套） -->
+          <div class="filter-bar">
+            <div class="tab-group" id="admin-chapter-category-tab-group">
+              <button type="button" class="tab-btn active" data-category="all">全部 (66卷)</button>
+              <button type="button" class="tab-btn" data-category="ot">舊約 (39卷)</button>
+              <button type="button" class="tab-btn" data-category="nt">新約 (27卷)</button>
+            </div>
+
+            <div class="search-box">
+              <input type="text" id="admin-chapter-search-input" class="search-input" placeholder="🔍 快速搜尋書卷名稱（例如：創世記、羅馬書）...">
+            </div>
+          </div>
+
+          <!-- 圖例說明 -->
+          <div class="legend-bar">
+            <div class="legend-item">
+              <span class="legend-box" style="background: var(--claimed-bg); border: 1px solid var(--claimed-border); opacity: 0.55;"></span>
+              <span>尚未被認領（無法點選）</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-box" style="background: #FFFAEB; border: 1px solid #FEDF89;"></span>
+              <span>已認領・待收件（點擊標記已收件）</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-box" style="background: var(--success-bg); border: 1px solid #6CE9A6;"></span>
+              <span>已收件（再點一次可取消）</span>
+            </div>
+          </div>
+
+          <div id="admin-books-container" class="books-container">
+            <!-- 由 JS 動態生成 66 卷書 -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 視圖五：認領驗證成功慶祝專屬頁面 (Celebration Landing) ================= -->
+    <section id="section-verified-success" style="display: none;">
+      <div class="celebration-container">
+        <div class="celebration-header">
+          <div class="celebration-fireworks-icon">🎉 ✍️ ✨</div>
+          <h1 class="celebration-title">恭喜您！已正式完成手抄聖經認領！</h1>
+          <p class="celebration-callout">「趕快印出稿紙，拿起筆來抄寫吧！」</p>
+        </div>
+
+        <!-- 認領成果摘要卡片 -->
+        <div class="celebration-card" id="celebration-card-content">
+          <!-- 由 JS 填入 -->
+        </div>
+
+        <!-- 核心行動按鈕 -->
+        <div class="celebration-actions-grid">
+          <a href="{{paperPath}}" download="{{paperFile}}" class="btn-celebration-download">
+            📥 立即下載專用「{{paperFile}}」
+          </a>
+          <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <button type="button" class="btn-secondary" id="btn-copy-success-link"
+              style="background: #ffffff; padding: 12px 24px; font-weight: 600;">
+              📋 複製我的專屬查詢/退選連結
+            </button>
+            <button type="button" class="btn-secondary" id="btn-back-home"
+              style="background: #ffffff; padding: 12px 24px; font-weight: 600;">
+              📖 返回手抄聖經總覽首頁
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 底部懸浮認領購物車列 (Floating Selection Bar) -->
+  <div id="floating-cart" class="floating-cart" style="display: none;">
+    <div class="cart-info">
+      <span class="cart-count-badge" id="cart-selected-count">0</span>
+      <span class="claim-selected-list" id="claim-selected-list"></span>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <button type="button" id="btn-clear-selected" class="btn-secondary"
+        style="background: transparent; color: #D0D5DD; border-color: rgba(255,255,255,0.2); padding: 8px 12px; font-size: 12.5px;">清空</button>
+      <button type="button" id="btn-open-claim-modal" class="btn-open-claim-modal">
+        填寫資料並送出認領 ➔
+      </button>
+    </div>
+  </div>
+
+  <!-- 認領資料填寫彈窗 (Claim Form Modal) -->
+  <div id="modal-claim" class="modal-backdrop" style="display: none;">
+    <div class="modal-box">
+      <button type="button" class="modal-close-btn" id="modal-claim-close">&times;</button>
+
+      <div class="modal-header">
+        <h2 class="modal-title">📖 確認認領手抄聖經章節</h2>
+        <p class="modal-subtitle">送出後立即完成認領，不需要再收信點擊確認。</p>
+      </div>
+
+      <!-- 選中章節摘要與面數統計 -->
+      <div class="modal-selected-summary" id="modal-selected-summary"></div>
+
+      <form id="form-claim">
+        <div class="form-group">
+          <label class="form-label" for="claim-name">姓名 <span class="required">*</span></label>
+          <input type="text" id="claim-name" class="form-input" placeholder="請輸入您的真實姓名" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="claim-email">電子郵件信箱 (Email) <span
+              style="color: var(--text-muted); font-weight: 400; font-size: 12.5px;">（選填，用於寄送提醒信與日後查詢/取消認領）</span></label>
+          <input type="email" id="claim-email" class="form-input" placeholder="例：yourname@gmail.com">
+          <div id="email-error-hint" style="color: var(--danger); font-size: 12.5px; margin-top: 4px; display: none;">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="claim-fellowship">所屬團契 <span
+              style="color: var(--text-muted); font-weight: 400; font-size: 12.5px;">（選填）</span></label>
+          <input type="text" id="claim-fellowship" class="form-input" placeholder="例：恩典團契、婦女查經團契、信友團契...">
+        </div>
+
+        <div
+          style="background: #F8F9FA; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px; font-size: 12.5px; color: #475467; margin-bottom: 20px; line-height: 1.6;">
+          📌 <strong>抄寫提醒：</strong><br>
+          • 譯本規範：一律請使用<strong>【和合本】</strong>聖經抄寫。<br>
+          • 筆具限制：一律使用<strong>黑色或藍色筆</strong>抄寫。<br>
+          • 截稿日期：請於 <strong>{{deadlineSlash}} 前</strong>抄寫完畢並送至收件處（{{overdueNotice}}）<br>
+          • 若未填寫電子郵件信箱，之後將<strong>無法自助查詢或取消認領</strong>，請務必記下或截圖您所認領的章節。
+        </div>
+
+        <button type="submit" class="btn-primary" id="btn-submit-claim" style="font-size: 15px; padding: 12px;">
+          ✅ 送出認領（立即完成）
+        </button>
+        <p style="text-align: center; color: var(--text-muted); font-size: 12.5px; margin-top: 8px;">
+          送出後請耐心等待，系統處理中請勿重複點擊。
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- 點擊信件完成驗證彈窗 (Verified & Confirmed Modal) -->
+  <div id="modal-verified" class="modal-backdrop" style="display: none;">
+    <div class="modal-box" style="text-align: center;">
+      <button type="button" class="modal-close-btn" id="modal-verified-close">&times;</button>
+
+      <div style="font-size: 48px; margin-bottom: 12px;">🎉</div>
+      <h2 style="font-size: 22px; margin-bottom: 8px; color: #101828;">恭喜！您已正式完成認領！</h2>
+      <p style="color: #475467; font-size: 14.5px; line-height: 1.6; margin-bottom: 18px;" id="verified-modal-desc">
+        系統已為您正式鎖定抄寫章節。
+      </p>
+
+      <div id="verified-details"
+        style="background: #F8F9FA; border: 1px solid var(--border); padding: 16px; border-radius: var(--radius-md); font-size: 14px; text-align: left; margin-bottom: 18px;">
+      </div>
+
+      <a href="{{paperPath}}" download="{{paperFile}}" class="pdf-download-btn"
+        style="width: 100%; margin-bottom: 12px;">
+        📥 下載專用稿紙（{{paperFile}}）
+      </a>
+
+      <button type="button" id="btn-close-verified-modal" class="btn-secondary" style="width: 100%;">
+        關閉視窗
+      </button>
+    </div>
+  </div>
+
+  <!-- 信件即時預覽彈窗 -->
+  <div id="modal-email-preview" class="modal-backdrop" style="display: none;">
+    <div class="modal-box" style="max-width: 680px; padding: 24px;">
+      <button type="button" id="email-modal-close" class="modal-close-btn">&times;</button>
+      <h3 style="font-size: 16px; margin-bottom: 4px;" id="email-modal-subject">信件主旨</h3>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;" id="email-modal-to">收件人：</p>
+
+      <div
+        style="border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: #F8F9FA;">
+        <iframe id="email-modal-frame" sandbox="" style="width: 100%; height: 480px; border: none; background: #ffffff;"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- 全域 Toast 提示訊息容器 -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- 主程式碼載入 -->
+  <script type="module" src="./src/js/app.js"></script>
+</body>
+
+</html>

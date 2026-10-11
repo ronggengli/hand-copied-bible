@@ -1,0 +1,1657 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap');
+
+:root {
+  /* 品牌色系（要換配色直接改這裡的色碼） */
+  --brand-dark: #101828;
+  --brand-navy: #1D2939;
+  --brand-slate: #344054;
+  --brand-muted: #667085;
+  --brand-red: #BA2400;
+  --brand-red-hover: #9e1f00;
+  --brand-red-light: #fff4f2;
+  --brand-gold: #D97706;
+  --brand-cream: #F6EADE;
+  
+  --primary: #1D2939;
+  --primary-hover: #101828;
+  --primary-light: #F2F4F7;
+  --accent-red: #BA2400;
+  
+  --bg-page: #F9FAFB;
+  --bg-card: #FFFFFF;
+  --border: #E4E7EC;
+  --border-light: #F2F4F7;
+  --text-main: #101828;
+  --text-muted: #475467;
+  --text-light: #98A2B3;
+  
+  --claimed-bg: #EAECF0;
+  --claimed-text: #98A2B3;
+  --claimed-border: #D0D5DD;
+  
+  --success: #079455;
+  --success-bg: #ECFDF3;
+  --danger: #D92D20;
+  --danger-bg: #FEF3F2;
+  
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-md: 0 4px 8px -2px rgba(16, 24, 40, 0.1), 0 2px 4px -2px rgba(16, 24, 40, 0.06);
+  --shadow-lg: 0 12px 16px -4px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.03);
+  --shadow-xl: 0 20px 24px -4px rgba(16, 24, 40, 0.12);
+  
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Noto Sans TC', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1, h2, h3, .serif-font {
+  font-family: 'Noto Serif TC', 'Noto Sans TC', serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 頂部主導航列 (Top Bar) */
+.brand-topbar {
+  background: var(--brand-dark);
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+.topbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.brand-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.brand-logo-text {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.brand-logo-img {
+  height: 42px;
+  width: auto;
+  display: block;
+}
+
+.brand-divider {
+  width: 1px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.brand-project-title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  font-family: 'Noto Serif TC', serif;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-nav {
+  background: rgba(255, 255, 255, 0.08);
+  color: #E4E7EC;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 7px 15px;
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.btn-nav:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-nav.active {
+  background: var(--brand-red);
+  color: #ffffff;
+  border-color: var(--brand-red);
+  font-weight: 600;
+}
+
+.btn-nav-external {
+  background: transparent;
+  border-style: dashed;
+  opacity: 0.85;
+}
+
+.btn-nav-external:hover {
+  opacity: 1;
+}
+
+/* 主視覺 Hero 區域 */
+.hero-banner {
+  background: linear-gradient(135deg, #101828 0%, #1D2939 60%, #344054 100%);
+  color: #ffffff;
+  padding: 38px 20px 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 85% 15%, rgba(186, 36, 0, 0.15), transparent 45%);
+  pointer-events: none;
+}
+
+.hero-header {
+  margin-bottom: 20px;
+}
+
+.hero-slogan-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.4;
+  color: #ffffff;
+  letter-spacing: 1px;
+  max-width: 960px;
+  margin: 0 0 8px 0;
+}
+
+.hero-slogan-subtitle {
+  font-size: 16.5px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #EAECF0;
+  max-width: 900px;
+  margin: 0;
+}
+
+.slogan-highlight {
+  white-space: nowrap;
+  display: inline-block;
+  color: #F6EADE;
+  font-weight: 900;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* 全站進度卡片 */
+.progress-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin-top: 24px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.progress-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #EAECF0;
+}
+
+.progress-stats {
+  font-size: 20px;
+  font-weight: 700;
+  color: #F6EADE;
+}
+
+.progress-bar-bg {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #BA2400 0%, #D97706 70%, #F6EADE 100%);
+  border-radius: var(--radius-full);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 「已經繳交進度」用綠色系，跟上方「認領進度」的紅橙色系做出區隔 */
+.progress-bar-fill.submitted-fill {
+  background: linear-gradient(90deg, #067647 0%, #17B26A 70%, #D1FADF 100%);
+}
+
+/* 兩條進度條疊在同一張卡片內時的間距 */
+.progress-card + .progress-card {
+  margin-top: 14px;
+}
+
+/* 注意事項 & 稿紙下載欄（溫潤米色系卡片排版） */
+.notice-section {
+  background: #FDFBF7;
+  border-bottom: 1px solid #EAE4D9;
+  padding: 28px 0 24px;
+}
+
+/* 隨機幫我選區塊 (Lucky Picker Card) */
+.lucky-picker-card {
+  background: linear-gradient(135deg, #FFF9F5 0%, #FDF4EC 100%);
+  border: 1px solid #FEDF89;
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.lucky-picker-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lucky-picker-icon {
+  font-size: 24px;
+}
+
+.lucky-picker-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #78350F;
+}
+
+.lucky-picker-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-lucky {
+  background: #ffffff;
+  border: 1.5px solid #F59E0B;
+  color: #92400E;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.btn-lucky:hover {
+  background: #F59E0B;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+}
+
+.notice-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.notice-main-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--brand-dark);
+}
+
+.notice-cards-grid {
+  display: grid;
+  /* 固定 3 欄，不用 auto-fit：目前恰好有 3 張短卡片（譯本規範/禱告/紙筆）要並排一列，
+     下面幾張長卡片（書寫格式、範例、收件地點）都用 grid-column: 1 / -1 佔滿整列。
+     用固定欄數才能保證兩者對齊——auto-fit 的欄數是「整個 grid 共用」的，只要有任何一張
+     卡片 span 到第 4 欄，那一欄的軌道就不會因為某一列沒東西而收合，導致只有 3 張卡片的
+     那一列右側留白、對不齊下面滿版卡片的右邊界。改成固定 3 欄後，1 / -1 剛好等於 1 / 4，
+     3 張卡片跟滿版卡片天生就是同一個寬度。手機版改回單欄，見下面 @media。 */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  /* CSS Grid 預設會把同一列的格子都撐到跟該列最高的格子一樣高（align-items: stretch）。
+     改成 start 讓每張卡片只長到自己內容的高度，不再被同列最高的卡片撐開。 */
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .notice-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 「書寫格式範例」（左）+「活動期間」「收件地點及時間」上下疊放（右）的兩欄組合。
+   範例卡內容天生比另外兩張矮卡片加起來還高很多，用 align-items: stretch（預設值）
+   讓右欄的疊放容器跟著左欄一樣高，疊放容器內部再用 justify-content: space-between
+   把多出來的高度平均分給兩張卡片中間的間距，而不是全部堆在最下面變成一塊死空白。 */
+.notice-card-cluster {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.notice-card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* 多出來的高度改由「活動期間」卡片自己（inline style 上的 flex: 1）長高吃掉，
+     這裡不用 justify-content: space-between 把它變成兩張卡片中間的一大截空隙。 */
+}
+
+@media (max-width: 768px) {
+  .notice-card-cluster {
+    grid-template-columns: 1fr;
+  }
+}
+
+.notice-card {
+  background: #FFFFFF;
+  border: 1px solid #EAE4D9;
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notice-card.highlight-card {
+  background: #FFF9F7;
+  border-color: #F8D7DA;
+}
+
+.notice-card.location-card {
+  grid-column: span 1;
+}
+
+@media (min-width: 992px) {
+  .notice-card.location-card {
+    grid-column: span 2;
+  }
+}
+
+.notice-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notice-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.notice-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--brand-dark);
+}
+
+.notice-card-text {
+  font-size: 15px;
+  color: #344054;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.location-details-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.location-item {
+  flex: 1 1 220px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.location-item + .location-item {
+  padding-left: 24px;
+  border-left: 1px solid var(--border);
+}
+
+/* 這條左邊框是給「多個收件地點並排在同一行」時當中間分隔線用的。
+   問題是 .location-item 用 flex-wrap 自動換行，會不會真的並排完全看卡片本身
+   的寬度，不是看螢幕寬度——卡片變窄（例如跟其他卡片同一列擠壓，或這張卡片本身
+   就不是滿版寬度）時，第二個地點會被擠到下一行，但這條左邊框沒消失，就變成
+   它前面莫名多一條直線。改用 container query 直接偵測「卡片自己的寬度」，比照
+   .location-card-wrap 宣告的 container-type，換行時把左邊框改成上邊框，
+   跟實際換行後的排列方式一致。舊的 @media (max-width:480px) 規則拿掉，
+   因為那是用「螢幕寬度」猜「卡片會不會換行」，猜不準（例如寬螢幕但卡片本身很窄
+   的情況），container query 才是真正對應的條件。 */
+.location-card-wrap {
+  container-type: inline-size;
+}
+
+@container (max-width: 420px) {
+  .location-item + .location-item {
+    padding-left: 0;
+    border-left: none;
+    padding-top: 14px;
+    margin-top: 4px;
+    border-top: 1px solid var(--border);
+  }
+}
+
+.loc-badge {
+  flex-shrink: 0;
+  background: var(--brand-red);
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* 書寫格式範例圖（馬太福音第一章 + 詩篇第八篇兩份縮圖並排，點圖開啟完整 PDF） */
+.manuscript-example-body {
+  /* 說明文字獨立一行、兩份範例縮圖另外一行並排，不要跟文字同一個 flex 列——
+     文字用 flex: 1 1 260px 搭配後面固定寬度的縮圖時，文字的彈性寬度會把整個
+     可用空間吃掉，縮圖被推到最右邊，中間留下一大片空白。改成上下分兩層後，
+     文字自然佔滿整行寬度，縮圖列在手機上也能正常換行。 */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.manuscript-example-body .notice-card-text {
+  margin: 0;
+}
+
+.manuscript-example-links {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.manuscript-example-link {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.manuscript-example-img {
+  width: 150px;
+  height: auto;
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.manuscript-example-link:hover .manuscript-example-img {
+  transform: scale(1.04);
+  box-shadow: var(--shadow-md);
+}
+
+.manuscript-example-caption {
+  font-size: 12px;
+  color: var(--brand-red);
+  font-weight: 600;
+  text-align: center;
+}
+
+.manuscript-example-name {
+  font-size: 12.5px;
+  color: var(--brand-dark);
+  font-weight: 700;
+  text-align: center;
+}
+
+.loc-time {
+  font-size: 14px;
+  color: #344054;
+  line-height: 1.65;
+}
+
+.loc-sub {
+  color: var(--text-muted);
+  font-size: 12.5px;
+}
+
+.notice-location-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14.5px;
+  color: #344054;
+  line-height: 1.55;
+}
+
+.notice-location-list li {
+  position: relative;
+  padding-left: 14px;
+}
+
+.notice-location-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--brand-red);
+  font-weight: bold;
+}
+
+.pdf-download-btn {
+  background: var(--brand-dark);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.pdf-download-btn:hover {
+  background: var(--brand-navy);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* 主內容區 */
+.main-wrapper {
+  padding: 32px 0 100px;
+}
+
+/* 主要內容區 */
+.main-content {
+  padding-top: 24px;
+  padding-bottom: 120px;
+}
+
+/* 篩選與搜尋欄 */
+.filter-bar {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.filter-row-top {
+  justify-content: space-between;
+}
+
+.filter-row-bottom {
+  justify-content: flex-start;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+
+.tab-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.tab-btn:hover {
+  background: var(--primary-light);
+  color: var(--text-main);
+  border-color: #D0D5DD;
+}
+
+.tab-btn.active {
+  background: var(--brand-navy);
+  color: #ffffff;
+  border-color: var(--brand-navy);
+  font-weight: 600;
+}
+
+/* 後台「名單管理 / 章節收件」頁籤：比一般 tab-btn 大一號，外面包一層底色容器，
+   做成清楚的分段控制（segmented control）樣式，而不是跟其他小 tab 混在一起不明顯 */
+#admin-tab-group {
+  background: #F2F4F7;
+  padding: 6px;
+  border-radius: var(--radius-lg);
+  display: inline-flex;
+  gap: 4px;
+}
+
+#admin-tab-group .tab-btn {
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 11px 26px;
+}
+
+.search-input-wrap {
+  position: relative;
+  min-width: 250px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 14px 8px 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 13.5px;
+  outline: none;
+  background: #FFFFFF;
+  transition: var(--transition);
+}
+
+.search-input:focus {
+  border-color: var(--brand-navy);
+  box-shadow: 0 0 0 3px rgba(29, 41, 57, 0.1);
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  pointer-events: none;
+}
+
+/* 圖例 */
+.legend-bar {
+  display: flex;
+  gap: 18px;
+  font-size: 13px;
+  margin-bottom: 20px;
+  padding: 0 6px;
+  color: var(--text-muted);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* .legend-box 是 HTML 實際在用的 class 名稱（.legend-dot 是舊命名殘留，兩者共用同一份基礎方塊樣式，
+   避免 HTML 用了沒對應定義的 class 導致圖例色塊完全不顯示） */
+.legend-box,
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.legend-box.available,
+.legend-dot.available {
+  background: #ffffff;
+  border: 1px solid #D0D5DD;
+}
+
+.legend-box.selected,
+.legend-dot.selected {
+  background: var(--brand-navy);
+  border: 1px solid var(--brand-dark);
+}
+
+.legend-box.claimed,
+.legend-dot.claimed {
+  background: var(--claimed-bg);
+  border: 1px solid var(--claimed-border);
+}
+
+/* 書卷卡片清單 */
+.book-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.book-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 20px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.book-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.book-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.book-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.book-name {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* .book-tag 是原本設計的 class 名稱，實際 renderBooks()/renderAdminChaptersGrid() 用的是
+   .book-testament-badge，兩者共用同一份樣式，避免 JS 產生的 class 找不到對應 CSS 定義 */
+.book-tag,
+.book-testament-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: #F2F4F7;
+  color: #344054;
+}
+
+.book-testament-badge.ot {
+  background: #FEF0C7;
+  color: #93370D;
+}
+
+.book-testament-badge.nt {
+  background: #E0F2FE;
+  color: #026AA2;
+}
+
+/* .book-progress-text 是原本設計的 class 名稱，實際 JS 用的是 .book-meta */
+.book-progress-text,
+.book-meta {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* 章節按鈕網格 (Grid Layout) */
+.chapter-grid,
+.chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 8px;
+}
+
+.chapter-btn {
+  background: #FFFFFF;
+  border: 1px solid #D0D5DD;
+  border-radius: var(--radius-md);
+  padding: 10px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  user-select: none;
+  position: relative;
+}
+
+.chapter-btn:hover:not(:disabled) {
+  border-color: var(--brand-navy);
+  background: var(--primary-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.chapter-num {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.chapter-verses {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* 選取中 */
+.chapter-btn.selected {
+  background: var(--brand-navy);
+  border-color: var(--brand-navy);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(29, 41, 57, 0.25);
+}
+
+.chapter-btn.selected .chapter-num,
+.chapter-btn.selected .chapter-verses {
+  color: #ffffff;
+}
+
+.chapter-btn.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 3px;
+  right: 6px;
+  font-size: 11px;
+  font-weight: 900;
+  color: #F6EADE;
+}
+
+/* 已被認領 (灰色鎖定) */
+.chapter-btn.claimed {
+  background: var(--claimed-bg);
+  border-color: var(--claimed-border);
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
+.chapter-btn.claimed .chapter-num {
+  color: #667085;
+  text-decoration: line-through;
+}
+
+.chapter-btn.claimed .chapter-verses {
+  color: #98A2B3;
+}
+
+.chapter-btn.claimed::after {
+  content: '已認領';
+  position: absolute;
+  bottom: 3px;
+  font-size: 9.5px;
+  color: #667085;
+  font-weight: 600;
+}
+
+/* 已認領且已收件（公開認領頁籤用，跟後台「章節收件」的 admin-submitted 同一套配色，
+   但這裡是純顯示、不可點擊取消） */
+.chapter-btn.claimed.submitted {
+  background: var(--success-bg);
+  border-color: #6CE9A6;
+  opacity: 1;
+}
+
+.chapter-btn.claimed.submitted .chapter-num {
+  color: var(--success);
+  text-decoration: none;
+}
+
+.chapter-btn.claimed.submitted .chapter-verses {
+  color: var(--success);
+}
+
+.chapter-btn.claimed.submitted::after {
+  content: '✓ 已收件';
+  color: var(--success);
+  font-weight: 800;
+}
+
+/* 後台「章節收件」頁籤專用三態：尚未被認領（不可點）/ 已認領待收件（可點標記）/ 已收件（可點取消標記） */
+.chapter-btn.admin-unclaimed {
+  background: var(--claimed-bg);
+  border-color: var(--claimed-border);
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.chapter-btn.admin-unclaimed .chapter-num,
+.chapter-btn.admin-unclaimed .chapter-verses {
+  color: #98A2B3;
+}
+
+.chapter-btn.admin-pending {
+  background: #FFFAEB;
+  border-color: #FEDF89;
+}
+
+.chapter-btn.admin-pending .chapter-verses {
+  color: #B54708;
+  font-weight: 700;
+}
+
+/* 儲存中：游標變禁止符號、不能再點，等後端寫入成功後才換成新顏色 */
+.chapter-btn.admin-saving,
+.chapter-btn.admin-saving * {
+  cursor: not-allowed !important;
+}
+
+.chapter-btn.admin-saving {
+  opacity: 0.75;
+}
+
+.chapter-btn.admin-saving .chapter-verses {
+  color: #475467;
+  font-weight: 700;
+}
+
+.chapter-btn.admin-submitted {
+  background: var(--success-bg);
+  border-color: #6CE9A6;
+}
+
+.chapter-btn.admin-submitted .chapter-num,
+.chapter-btn.admin-submitted .chapter-verses {
+  color: var(--success);
+}
+
+.chapter-btn.admin-submitted::after {
+  content: '✓ 已收件';
+  position: absolute;
+  top: 3px;
+  right: 6px;
+  font-size: 9.5px;
+  font-weight: 800;
+  color: var(--success);
+}
+
+/* 底部懸浮認領列 (永遠固定在視窗最下方，選中時才顯示) */
+.floating-cart {
+  position: fixed !important;
+  bottom: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: min(92%, 760px) !important;
+  background: #101828 !important;
+  color: #ffffff !important;
+  padding: 12px 20px !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.15) !important;
+  display: none; /* 預設完全隱藏 */
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  z-index: 99999 !important;
+}
+
+.floating-cart.active {
+  display: flex !important;
+  animation: slideUpFloat 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUpFloat {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 30px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.cart-info,
+.claim-bar-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-count-badge,
+.claim-badge-count {
+  background: var(--brand-red);
+  color: #ffffff;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.claim-selected-list {
+  font-size: 13.5px;
+  color: #F2F4F7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-open-claim-modal {
+  background: var(--brand-red) !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  border-radius: 10px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: all var(--transition-fast) !important;
+  box-shadow: 0 2px 8px rgba(186, 36, 0, 0.4) !important;
+  flex-shrink: 0 !important;
+}
+
+.btn-open-claim-modal:hover {
+  background: #d92d00 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(186, 36, 0, 0.5) !important;
+}
+
+/* 彈窗背景與卡片 (Modal Backdrop & Box) */
+.modal-backdrop,
+.modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: rgba(16, 24, 40, 0.7) !important;
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000 !important; /* 高於底部懸浮列，避免被懸浮列覆蓋 */
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.modal-box,
+.modal-card {
+  background: #ffffff !important;
+  border-radius: 20px !important;
+  max-width: 540px !important;
+  width: 100% !important;
+  max-height: 86vh !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 28px 24px 36px !important; /* 底部保留 36px 呼吸空間 */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25) !important;
+  position: relative !important;
+  box-sizing: border-box;
+  animation: modalScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #F2F4F7;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.modal-close-btn:hover {
+  background: #E4E7EC;
+  color: var(--text-main);
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.modal-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+/* 表單 */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.form-label .required {
+  color: var(--danger);
+  margin-left: 2px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  outline: none;
+  background: #FFFFFF;
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+.form-input:focus {
+  border-color: var(--brand-navy);
+  box-shadow: 0 0 0 3px rgba(29, 41, 57, 0.12);
+}
+
+.btn-primary {
+  width: 100%;
+  background: var(--brand-navy);
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary:hover {
+  background: var(--brand-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background: #F2F4F7;
+  color: #344054;
+  border: 1px solid var(--border);
+  padding: 9px 16px;
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-secondary:hover {
+  background: #E4E7EC;
+}
+
+/* 成功卡片 */
+.success-box {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.success-icon {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.magic-link-box {
+  background: #F8F9FA;
+  border: 1px dashed #D0D5DD;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-size: 12.5px;
+  word-break: break-all;
+  margin: 14px 0;
+  color: #344054;
+}
+
+/* 後台管理儀表板 */
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.stat-sub {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+.admin-table-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.admin-table-toolbar {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  text-align: left;
+}
+
+.admin-table th {
+  background: #F8F9FA;
+  padding: 12px 16px;
+  font-weight: 700;
+  color: #344054;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+}
+
+.admin-table tr:hover {
+  background: #F8F9FA;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.badge-success {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.badge-warning {
+  background: #FEF0C7;
+  color: #B54708;
+}
+
+/* 繳交狀態徽章（後台名單表格用；submitted/pending 是既有 JS 沿用的命名，
+   partial 是章節顆粒度上線後新增的「部分已繳交」中間態） */
+.badge-submitted {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.badge-pending {
+  background: #FEF0C7;
+  color: #B54708;
+}
+
+.badge-partial {
+  background: #E0F2FE;
+  color: #026AA2;
+}
+
+.btn-toggle-status {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.btn-toggle-status.submitted {
+  background: #ECFDF3;
+  color: #079455;
+  border: 1px solid #A6F4C5;
+}
+
+.btn-toggle-status.pending {
+  background: #FEF0C7;
+  color: #B54708;
+  border: 1px solid #FEDF89;
+}
+
+.btn-action-sm {
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-action-sm:hover {
+  background: #F2F4F7;
+}
+
+/* Toast */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--brand-dark);
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  box-shadow: var(--shadow-lg);
+  pointer-events: auto;
+  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toast.toast-error {
+  background: #B42318;
+}
+
+.toast.toast-success {
+  background: #027A48;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* 認領成功慶祝專屬頁面 (Celebration Landing) */
+.celebration-container {
+  max-width: 680px;
+  margin: 30px auto 60px;
+  text-align: center;
+  animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.celebration-fireworks-icon {
+  font-size: 52px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
+}
+
+.celebration-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--brand-dark);
+  margin: 0 0 10px 0;
+  letter-spacing: -0.5px;
+}
+
+.celebration-callout {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--brand-red);
+  background: #FFF4F0;
+  border: 1.5px dashed var(--brand-red);
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  margin: 8px 0 24px 0;
+  box-shadow: 0 4px 12px rgba(186, 36, 0, 0.1);
+}
+
+.celebration-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  text-align: left;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 28px;
+}
+
+.btn-celebration-download {
+  display: block;
+  background: #101828;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 800;
+  padding: 16px 28px;
+  border-radius: 12px;
+  text-align: center;
+  transition: all var(--transition);
+  box-shadow: 0 6px 20px rgba(16, 24, 40, 0.25);
+  margin-bottom: 14px;
+}
+
+.btn-celebration-download:hover {
+  background: #1D2939;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(16, 24, 40, 0.35);
+}
+
+/* 手機與平板適配 */
+@media (max-width: 768px) {
+  .hero-slogan-title {
+    font-size: 22px;
+    line-height: 1.4;
+  }
+  .hero-slogan-subtitle {
+    font-size: 14.5px;
+  }
+  .brand-logo-img {
+    height: 34px;
+  }
+  .chapter-grid,
+  .chapters-grid {
+    grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+    gap: 6px;
+  }
+  .chapter-btn {
+    padding: 8px 4px;
+  }
+  .chapter-num {
+    font-size: 13px;
+  }
+  .floating-cart,
+  .floating-claim-bar {
+    width: calc(100% - 24px) !important;
+    bottom: 12px !important;
+    padding: 10px 14px !important;
+    border-radius: 14px !important;
+    gap: 8px !important;
+  }
+  .claim-selected-list {
+    display: none;
+  }
+  .btn-open-claim-modal {
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* 資料同步狀態列（首頁進度條下方） */
+.sync-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #EAECF0;
+}
+
+.sync-status.is-stale #sync-status-text {
+  color: #FFD9A0;
+  font-weight: 600;
+}
+
+.sync-refresh-btn {
+  background: rgba(255, 255, 255, 0.16);
+  color: #F6EADE;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-full);
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.sync-refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* 名單頁按鈕處理中：游標變禁止符號、不能再點，完成後恢復（與章節收件格子的「儲存中」行為一致） */
+.is-busy,
+.is-busy * {
+  cursor: not-allowed !important;
+}
+
+.is-busy {
+  opacity: 0.7;
+}
